@@ -5,17 +5,22 @@ import React, { useState, useEffect } from "react"
 const mockFetch = async () => {
   const res = await fetch("/static/__credits.json")
   const jsonres = await res.json()
-  return jsonres
+  const reslist = Object.entries(jsonres).map(([key, value]) => ({key,...value}))
+  return reslist
 }
 
 function App() {
   const [entries, setEntries] = useState([])
 
   useEffect(() => {
-    mockFetch().then(res => console.log(res))
+    mockFetch().then(reslist => { 
+      setEntries(reslist) 
+    })
   },[])
   return (
-    <div> Frontend</div>
+    <div>{entries.map(el => {
+      return <img style={{width: "100%", margin: "1rem"}}src={`/static/${el.key}.jpg`} />
+    })}</div>
   );
 }
 
