@@ -4,10 +4,9 @@ import React, { useState, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 
 const mockFetch = async () => {
-  const res = await fetch("/static/__credits.json")
+  const res = await fetch("/getFilenames")
   const jsonres = await res.json()
-  const reslist = Object.entries(jsonres).map(([key, value]) => ({key,...value}))
-  return reslist
+  return jsonres
 }
 
 function App() {
@@ -26,9 +25,9 @@ function App() {
   return (
     <div>{entries.map((el, index) => {
       if (index === entries.length-1) {
-        return <img ref={ref} style={{width: "100%", margin: "1rem"}}src={`/static/${el.key}.jpg`} />
+        return <img ref={ref} style={{width: "100%", margin: "1rem"}}src={`/static/${el}`} />
       }
-      return <img style={{width: "100%", margin: "1rem"}}src={`/static/${el.key}.jpg`} />
+      return <img style={{width: "100%", margin: "1rem"}}src={`/static/${el}`} />
     })}</div>
   );
 }
